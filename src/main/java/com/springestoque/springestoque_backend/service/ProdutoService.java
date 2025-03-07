@@ -6,6 +6,7 @@ import com.springestoque.springestoque_backend.domain.Produto;
 import com.springestoque.springestoque_backend.domain.dto.ProdutoDTO;
 import com.springestoque.springestoque_backend.exception.CategoriaNaoEncontradaException;
 import com.springestoque.springestoque_backend.exception.FornecedorNaoEncontradoException;
+import com.springestoque.springestoque_backend.exception.ProdutoNaoEncontradoException;
 import com.springestoque.springestoque_backend.repository.CategoriaRepository;
 import com.springestoque.springestoque_backend.repository.FornecedorRepository;
 import com.springestoque.springestoque_backend.repository.ProdutoRepository;
@@ -27,8 +28,12 @@ public class ProdutoService {
     private FornecedorRepository fornecedorRepository;
 
     public List<ProdutoDTO> obterTodosOsProdutos() {
-        List<ProdutoDTO> produtos = repository.findAll().stream().map(ProdutoDTO::new).toList();
-        return produtos;
+        return repository.findAll().stream().map(ProdutoDTO::new).toList();
+    }
+
+    public ProdutoDTO obterProdutoPorId(Long id) {
+        Produto produto = repository.findById(id).orElseThrow(() -> new ProdutoNaoEncontradoException(id));
+        return new ProdutoDTO(produto);
     }
 
     public ProdutoDTO cadastrarProduto(ProdutoDTO dto) {

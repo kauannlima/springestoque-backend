@@ -23,6 +23,12 @@ public class ProdutoController {
         return ResponseEntity.ok().body(servico.obterTodosOsProdutos());
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("{id}")
+    public ResponseEntity<ProdutoDTO> obterProdutoPorId(@PathVariable Long id) {
+        return ResponseEntity.ok().body(servico.obterProdutoPorId(id));
+    }
+
   @CrossOrigin(origins = "*", allowedHeaders = "*")
    @PostMapping
     public ResponseEntity<ProdutoDTO> cadastrarProduto(@RequestBody ProdutoDTO produto){
