@@ -1,18 +1,10 @@
 package com.springestoque.springestoque_backend.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Cargo {
 
@@ -23,4 +15,27 @@ public class Cargo {
     @Column(nullable = false)
     private String nome;
 
+    public Cargo(Long id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+
+    public Cargo() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 }

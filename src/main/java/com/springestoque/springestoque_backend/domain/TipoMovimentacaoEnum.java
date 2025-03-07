@@ -3,8 +3,7 @@ package com.springestoque.springestoque_backend.domain;
 public enum TipoMovimentacaoEnum {
 
     ENTRADA("Compra (entrada)"),
-    SAIDA("Uso Interno (saída)"),
-    MANUNTENCAO("Manutençaõ");
+    SAIDA("Uso Interno (saída)");
 
     private String tipo;
 
