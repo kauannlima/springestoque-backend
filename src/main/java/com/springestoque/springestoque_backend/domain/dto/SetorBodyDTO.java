@@ -2,14 +2,12 @@ package com.springestoque.springestoque_backend.domain.dto;
 
 import com.springestoque.springestoque_backend.domain.Setor;
 
-public record SetorDTO(
-        Long id,
+public record SetorBodyDTO(
         String nome
 ) {
 
-    public SetorDTO(Setor setor) {
+    public SetorBodyDTO(Setor setor) {
         this(
-                setor.getId(),
                 setor.getNome()
         );
     }

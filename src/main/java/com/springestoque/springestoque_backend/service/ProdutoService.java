@@ -3,6 +3,7 @@ package com.springestoque.springestoque_backend.service;
 import com.springestoque.springestoque_backend.domain.Categoria;
 import com.springestoque.springestoque_backend.domain.Fornecedor;
 import com.springestoque.springestoque_backend.domain.Produto;
+import com.springestoque.springestoque_backend.domain.dto.ProdutoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.ProdutoDTO;
 import com.springestoque.springestoque_backend.exception.CategoriaNaoEncontradaException;
 import com.springestoque.springestoque_backend.exception.FornecedorNaoEncontradoException;
@@ -27,16 +28,16 @@ public class ProdutoService {
     @Autowired
     private FornecedorRepository fornecedorRepository;
 
-    public List<ProdutoDTO> obterTodosOsProdutos() {
-        return repository.findAll().stream().map(ProdutoDTO::new).toList();
+    public List<ProdutoBodyDTO> obterTodosOsProdutos() {
+        return repository.findAll().stream().map(ProdutoBodyDTO::new).toList();
     }
 
-    public ProdutoDTO obterProdutoPorId(Long id) {
+    public ProdutoBodyDTO obterProdutoPorId(Long id) {
         Produto produto = repository.findById(id).orElseThrow(() -> new ProdutoNaoEncontradoException(id));
-        return new ProdutoDTO(produto);
+        return new ProdutoBodyDTO(produto);
     }
 
-    public ProdutoDTO cadastrarProduto(ProdutoDTO dto) {
+    public ProdutoBodyDTO cadastrarProduto(ProdutoDTO dto) {
         Categoria categoria = categoriaRepository.findById(dto.categoria())
                 .orElseThrow(() -> new CategoriaNaoEncontradaException(dto.categoria()));
 
@@ -47,9 +48,9 @@ public class ProdutoService {
 
         produto = repository.save(produto);
 
-        return new ProdutoDTO(produto.getId(), produto.getNome(), produto.getCategoria().getId(),
+        return new ProdutoBodyDTO(produto.getNome(), produto.getCategoria().getNome(),
                 produto.getDescricao(), produto.getQuantidadeEmEstoque(),
-                produto.getFornecedor().getId());
+                produto.getFornecedor().getNome());
     }
 
 

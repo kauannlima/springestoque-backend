@@ -1,10 +1,7 @@
 package com.springestoque.springestoque_backend.service;
 
-import com.springestoque.springestoque_backend.domain.Categoria;
 import com.springestoque.springestoque_backend.domain.Fornecedor;
-import com.springestoque.springestoque_backend.domain.dto.FornecedorDTO;
-import com.springestoque.springestoque_backend.domain.dto.ProdutoDTO;
-import com.springestoque.springestoque_backend.repository.CategoriaRepository;
+import com.springestoque.springestoque_backend.domain.dto.FornecedorBodyDTO;
 import com.springestoque.springestoque_backend.repository.FornecedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +18,8 @@ public class FornecedorService {
         repository.save(fornecedor);
     }
 
-    public List<FornecedorDTO> obterTodosOsFornecedores() {
+    public List<FornecedorBodyDTO> obterTodosOsFornecedores() {
 
-        return repository.findAll().stream().map(FornecedorDTO::new).toList();
+        return repository.findAll().stream().map(FornecedorBodyDTO::new).toList();
     }
 }

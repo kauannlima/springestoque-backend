@@ -1,19 +1,16 @@
 package com.springestoque.springestoque_backend.domain.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.springestoque.springestoque_backend.domain.Fornecedor;
 
-public record FornecedorDTO(
-        Long id,
+public record FornecedorBodyDTO(
         String nome,
         String endereco,
         String telefone,
         String email
 ) {
 
-    public FornecedorDTO(Fornecedor fornecedor) {
+    public FornecedorBodyDTO(Fornecedor fornecedor) {
         this(
-                fornecedor.getId(),
                 fornecedor.getNome(),
                 fornecedor.getEndereco(),
                 fornecedor.getTelefone(),
