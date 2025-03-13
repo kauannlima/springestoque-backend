@@ -17,16 +17,26 @@ public class CargoController {
     @Autowired
     private CargoService servico;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping
+    public ResponseEntity<List<CargoBodyDTO>> obterTodosOsCargos() {
+        return ResponseEntity.ok().body(servico.obterTodosOsCargos());
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/{nome}")
+    public ResponseEntity<List<CargoBodyDTO>> obterCargosPorNome(@PathVariable String nome) {
+        return ResponseEntity.ok().body(servico.obterCargosPorNome(nome));
+    }
+
+
   @CrossOrigin(origins = "*", allowedHeaders = "*")
    @PostMapping
     public ResponseEntity cadastrarCargo(@RequestBody Cargo cargo){
              servico.cadastrarCargo(cargo);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @GetMapping
-    public ResponseEntity<List<CargoBodyDTO>> obterTodosOsCargos() {
-        return ResponseEntity.ok().body(servico.obterTodosOsCargos());
-    }
+
+
 
 }

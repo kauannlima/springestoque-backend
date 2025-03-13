@@ -1,10 +1,13 @@
 package com.springestoque.springestoque_backend.service;
 
+import com.springestoque.springestoque_backend.domain.Cargo;
 import com.springestoque.springestoque_backend.domain.Categoria;
 import com.springestoque.springestoque_backend.domain.Fornecedor;
 import com.springestoque.springestoque_backend.domain.Produto;
+import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.ProdutoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.ProdutoDTO;
+import com.springestoque.springestoque_backend.exception.CargoNaoEncontradoException;
 import com.springestoque.springestoque_backend.exception.CategoriaNaoEncontradaException;
 import com.springestoque.springestoque_backend.exception.FornecedorNaoEncontradoException;
 import com.springestoque.springestoque_backend.exception.ProdutoNaoEncontradoException;
@@ -15,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProdutoService {
@@ -30,6 +35,18 @@ public class ProdutoService {
 
     public List<ProdutoBodyDTO> obterTodosOsProdutos() {
         return repository.findAll().stream().map(ProdutoBodyDTO::new).toList();
+    }
+
+    public List<ProdutoBodyDTO> obterProdutosPorNome(String nome) {
+        Optional<Produto> produtos = repository.findAllByNomeContainingIgnoreCase(nome);
+
+        if (produtos.isEmpty()) {
+            throw new ProdutoNaoEncontradoException(nome);  // Exceção customizada
+        }
+
+        return produtos.stream()
+                .map(ProdutoBodyDTO::new)  // Convertendo de Cargo para CargoBodyDTO
+                .collect(Collectors.toList());  // Coletando em uma lista
     }
 
     public ProdutoBodyDTO obterProdutoPorId(Long id) {

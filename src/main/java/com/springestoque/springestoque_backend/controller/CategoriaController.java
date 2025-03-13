@@ -1,6 +1,7 @@
 package com.springestoque.springestoque_backend.controller;
 
 import com.springestoque.springestoque_backend.domain.Categoria;
+import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.CategoriaBodyDTO;
 import com.springestoque.springestoque_backend.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,18 @@ public class CategoriaController {
     @Autowired
     private CategoriaService servico;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping
+    public ResponseEntity<List<CategoriaBodyDTO>> obterTodasAsCategorias() {
+        return ResponseEntity.ok().body(servico.obterTodasAsCategorias());
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/{nome}")
+    public ResponseEntity<List<CategoriaBodyDTO>> obterCategoriasPorNome(@PathVariable String nome) {
+        return ResponseEntity.ok().body(servico.obterCategoriasPorNome(nome));
+    }
+
   @CrossOrigin(origins = "*", allowedHeaders = "*")
    @PostMapping
     public ResponseEntity cadastrarCategoria(@RequestBody Categoria categoria){
@@ -24,10 +37,5 @@ public class CategoriaController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @GetMapping
-    public ResponseEntity<List<CategoriaBodyDTO>> obterTodasAsCategorias() {
-        return ResponseEntity.ok().body(servico.obterTodasAsCategorias());
-    }
 
 }
