@@ -9,4 +9,3 @@ public class UsuarioNaoEncontradoException extends RuntimeException {
         super("Usuario não encontrado com o nome: " + nome);
     }
 }
-}

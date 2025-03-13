@@ -1,6 +1,7 @@
 package com.springestoque.springestoque_backend.controller;
 
 import com.springestoque.springestoque_backend.domain.Funcionario;
+import com.springestoque.springestoque_backend.domain.dto.FornecedorBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.FuncionarioBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.FuncionarioDTO;
 import com.springestoque.springestoque_backend.service.FuncionarioService;
@@ -18,18 +19,26 @@ public class FuncionarioController {
     @Autowired
     private FuncionarioService servico;
 
-  @CrossOrigin(origins = "*", allowedHeaders = "*")
-   @PostMapping
-    public ResponseEntity cadastrarFuncionario(@RequestBody FuncionarioDTO dto){
-      FuncionarioBodyDTO funcionarioDTO =  servico.cadastrarFuncionario(dto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioDTO);
-    }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public ResponseEntity<List<FuncionarioBodyDTO>> obterTodosOsFuncionarios() {
         return ResponseEntity.ok().body(servico.obterTodosOsFuncionarios());
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/{nome}")
+    public ResponseEntity<List<FuncionarioBodyDTO>> obterFuncionariosPorNome(@PathVariable String nome) {
+        return ResponseEntity.ok().body(servico.obterFuncionariosPorNome(nome));
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping
+    public ResponseEntity cadastrarFuncionario(@RequestBody FuncionarioDTO dto){
+        FuncionarioBodyDTO funcionarioDTO =  servico.cadastrarFuncionario(dto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioDTO);
     }
 
 }

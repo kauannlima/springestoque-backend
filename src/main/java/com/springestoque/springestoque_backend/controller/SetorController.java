@@ -1,6 +1,7 @@
 package com.springestoque.springestoque_backend.controller;
 
 import com.springestoque.springestoque_backend.domain.Setor;
+import com.springestoque.springestoque_backend.domain.dto.ProdutoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.SetorBodyDTO;
 import com.springestoque.springestoque_backend.service.SetorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +18,25 @@ public class SetorController {
     @Autowired
     private SetorService servico;
 
-  @CrossOrigin(origins = "*", allowedHeaders = "*")
-   @PostMapping
-    public ResponseEntity cadastrarSetor(@RequestBody Setor setor){
-             servico.cadastrarSetor(setor);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
+
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public ResponseEntity<List<SetorBodyDTO>> obterTodosOsSetores() {
         return ResponseEntity.ok().body(servico.obterTodosOsSetores());
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/{nome}")
+    public ResponseEntity<List<SetorBodyDTO>> obterSetoresPorNome(@PathVariable String nome) {
+        return ResponseEntity.ok().body(servico.obterSetoresPorNome(nome));
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping
+    public ResponseEntity cadastrarSetor(@RequestBody Setor setor){
+        servico.cadastrarSetor(setor);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }

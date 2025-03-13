@@ -1,6 +1,7 @@
 package com.springestoque.springestoque_backend.controller;
 
 import com.springestoque.springestoque_backend.domain.dto.FuncionarioDTO;
+import com.springestoque.springestoque_backend.domain.dto.SetorBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.UsuarioBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.UsuarioDTO;
 import com.springestoque.springestoque_backend.service.FuncionarioService;
@@ -19,18 +20,24 @@ public class UsuarioController {
     @Autowired
     private UsuarioService servico;
 
-  @CrossOrigin(origins = "*", allowedHeaders = "*")
-   @PostMapping
-    public ResponseEntity cadastrarUsuario(@RequestBody UsuarioDTO dto){
-        UsuarioBodyDTO usuarioBodyDTO =  servico.cadastrarUsuario(dto);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioBodyDTO);
-    }
-
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public ResponseEntity<List<UsuarioBodyDTO>> obterTodosOsUsuarios() {
         return ResponseEntity.ok().body(servico.obterTodosOsUsuarios());
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/{nome}")
+    public ResponseEntity<List<UsuarioBodyDTO>> obterUsuariosPorNome(@PathVariable String nome) {
+        return ResponseEntity.ok().body(servico.obterUsuariosPorNome(nome));
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping
+    public ResponseEntity cadastrarUsuario(@RequestBody UsuarioDTO dto){
+        UsuarioBodyDTO usuarioBodyDTO =  servico.cadastrarUsuario(dto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioBodyDTO);
     }
 
 }

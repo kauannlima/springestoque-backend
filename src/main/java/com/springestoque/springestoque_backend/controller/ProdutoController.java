@@ -1,5 +1,6 @@
 package com.springestoque.springestoque_backend.controller;
 
+import com.springestoque.springestoque_backend.domain.dto.FuncionarioBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.ProdutoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.ProdutoDTO;
 import com.springestoque.springestoque_backend.service.ProdutoService;
@@ -21,6 +22,12 @@ public class ProdutoController {
     @GetMapping
     public ResponseEntity<List<ProdutoBodyDTO>> obterTodosOsProdutos() {
         return ResponseEntity.ok().body(servico.obterTodosOsProdutos());
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/{nome}")
+    public ResponseEntity<List<ProdutoBodyDTO>> obterProdutosPorNome(@PathVariable String nome) {
+        return ResponseEntity.ok().body(servico.obterProdutosPorNome(nome));
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
