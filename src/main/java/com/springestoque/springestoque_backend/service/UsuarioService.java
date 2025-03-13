@@ -8,6 +8,7 @@ import com.springestoque.springestoque_backend.domain.dto.UsuarioBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.UsuarioDTO;
 import com.springestoque.springestoque_backend.exception.CargoNaoEncontradoException;
 import com.springestoque.springestoque_backend.exception.FuncionarioNaoEncontradoException;
+import com.springestoque.springestoque_backend.exception.UsuarioNaoEncontradoException;
 import com.springestoque.springestoque_backend.repository.FuncionarioRepository;
 import com.springestoque.springestoque_backend.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +36,15 @@ public class UsuarioService {
         return repository.findAll().stream().map(UsuarioBodyDTO::new).toList();
     }
 
-    public List<CargoBodyDTO> obterCargosPorNome(String nome) {
-        List<Cargo> cargos = repository.findAllByNomeContainingIgnoreCase(nome);
+    public List<UsuarioBodyDTO> obterUsuariosPorNome(String nome) {
+        List<Usuario> usuarios = repository.findAllByNomeDeUsuarioContainingIgnoreCase(nome);
 
-        if (cargos.isEmpty()) {
-            throw new CargoNaoEncontradoException(nome);  // Exceção customizada
+        if (usuarios.isEmpty()) {
+            throw new UsuarioNaoEncontradoException(nome);  // Exceção customizada
         }
 
-        return cargos.stream()
-                .map(CargoBodyDTO::new)  // Convertendo de Cargo para CargoBodyDTO
+        return usuarios.stream()
+                .map(UsuarioBodyDTO::new)  // Convertendo de Cargo para CargoBodyDTO
                 .collect(Collectors.toList());  // Coletando em uma lista
     }
 
