@@ -40,12 +40,26 @@ public class FornecedorService {
                 .collect(Collectors.toList());  // Coletando em uma lista
     }
 
-    public FornecedorBodyDTO obterFornecedorPorId(Long id) {
+    public  Fornecedor obterFornecedorPorId(Long id) {
         Fornecedor fornecedor = repository.findById(id).orElseThrow(() -> new FornecedorNaoEncontradoException(id));
-        return new FornecedorBodyDTO(fornecedor);
+        return fornecedor;
     }
 
     public void cadastrarFornecedor(Fornecedor fornecedor){
         repository.save(fornecedor);
     }
+
+    public void editarFornecedor(Long id, Fornecedor fornecedor) {
+        Fornecedor fornecedorBuscado = obterFornecedorPorId(id);
+
+        if (fornecedor.getNome() != null && !fornecedor.getNome().isBlank()) {
+            fornecedorBuscado.setNome(fornecedor.getNome());
+        }
+        if (fornecedor.getEmail() != null && !fornecedor.getEmail().isBlank()) {
+            fornecedorBuscado.setEmail(fornecedor.getEmail());
+        }
+
+        repository.save(fornecedorBuscado);
+    }
+
 }

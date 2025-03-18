@@ -45,13 +45,13 @@ public class ProdutoService {
         }
 
         return produtos.stream()
-                .map(ProdutoBodyDTO::new)  
+                .map(ProdutoBodyDTO::new)
                 .collect(Collectors.toList());
     }
 
-    public ProdutoBodyDTO obterProdutoPorId(Long id) {
+    public Produto obterProdutoPorId(Long id) {
         Produto produto = repository.findById(id).orElseThrow(() -> new ProdutoNaoEncontradoException(id));
-        return new ProdutoBodyDTO(produto);
+        return produto;
     }
 
     public ProdutoBodyDTO cadastrarProduto(ProdutoDTO dto) {
@@ -69,6 +69,23 @@ public class ProdutoService {
                 produto.getDescricao(), produto.getQuantidadeEmEstoque(),
                 produto.getFornecedor().getNome());
     }
+
+    public void editarProduto(Long id, Produto produto) {
+        Produto produtoBuscado = obterProdutoPorId(id);
+
+        if (produto.getNome() != null && !produto.getNome().isBlank()) {
+            produtoBuscado.setNome(produto.getNome());
+        }
+        if (produto.getDescricao() != null && !produto.getDescricao().isBlank()) {
+            produtoBuscado.setDescricao(produto.getDescricao());
+        }
+        if (produto.getQuantidadeEmEstoque() != null) {
+            produtoBuscado.setQuantidadeEmEstoque(produto.getQuantidadeEmEstoque());
+        }
+
+        repository.save(produtoBuscado);
+    }
+
 
 
 }

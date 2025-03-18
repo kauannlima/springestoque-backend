@@ -51,9 +51,9 @@ public class UsuarioService {
                 .collect(Collectors.toList());  // Coletando em uma lista
     }
 
-    public UsuarioBodyDTO obterUsuarioPorId(Long id) {
+    public Usuario obterUsuarioPorId(Long id) {
         Usuario usuario = repository.findById(id).orElseThrow(() -> new UsuarioNaoEncontradoException(id));
-        return new UsuarioBodyDTO(usuario);
+        return usuario;
     }
 
     public UsuarioBodyDTO cadastrarUsuario(UsuarioDTO dto){
@@ -72,4 +72,21 @@ public class UsuarioService {
         return new UsuarioBodyDTO(funcionario.getNome(),usuario.getNomeDeUsuario());
 
     }
+
+    public void editarUsuario(Long id, Usuario usuario) {
+        Usuario usuarioBuscado = obterUsuarioPorId(id);
+
+        if (usuario.getNomeDeUsuario() != null && !usuario.getNomeDeUsuario().isBlank()) {
+            usuarioBuscado.setNomeDeUsuario(usuario.getNomeDeUsuario());
+        }
+        if (usuario.getEmail() != null && !usuario.getEmail().isBlank()) {
+            usuarioBuscado.setEmail(usuario.getEmail());
+        }
+        if (usuario.getSenha() != null && !usuario.getSenha().isBlank()) {
+            usuarioBuscado.setSenha(passwordEncoder.encode(usuario.getSenha()));
+        }
+
+        repository.save(usuarioBuscado);
+    }
+
 }

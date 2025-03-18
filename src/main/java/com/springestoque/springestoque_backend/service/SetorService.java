@@ -38,13 +38,23 @@ public class SetorService {
                 .collect(Collectors.toList());  // Coletando em uma lista
     }
 
-    public SetorBodyDTO obterSetorPorId(Long id) {
+    public Setor obterSetorPorId(Long id) {
         Setor setor = repository.findById(id).orElseThrow(() -> new SetorNaoEncontradoException(id));
-        return new SetorBodyDTO(setor);
+        return setor;
     }
 
     public void cadastrarSetor(Setor setor){
         repository.save(setor);
+    }
+
+    public void editarSetor(Long id, Setor setor) {
+        Setor setorBuscado = obterSetorPorId(id);
+
+        if (setor.getNome() != null && !setor.getNome().isBlank()) {
+            setorBuscado.setNome(setor.getNome());
+        }
+
+        repository.save(setorBuscado);
     }
 
 }

@@ -42,9 +42,9 @@ public class FuncionarioService {
                 .collect(Collectors.toList());  // Coletando em uma lista
     }
 
-    public FuncionarioBodyDTO obterFuncionarioPorId(Long id) {
+    public Funcionario obterFuncionarioPorId(Long id) {
         Funcionario funcionario = repository.findById(id).orElseThrow(() -> new FuncionarioNaoEncontradoException(id));
-        return new FuncionarioBodyDTO(funcionario);
+        return funcionario;
     }
 
 
@@ -61,4 +61,21 @@ public class FuncionarioService {
                 funcionario.getEmail(), funcionario.getTelefone());
 
     }
+
+    public void editarFuncionario(Long id, Funcionario funcionario) {
+        Funcionario funcionarioBuscado = obterFuncionarioPorId(id);
+
+        if (funcionario.getNome() != null && !funcionario.getNome().isBlank()) {
+            funcionarioBuscado.setNome(funcionario.getNome());
+        }
+        if (funcionario.getEmail() != null && !funcionario.getEmail().isBlank()) {
+            funcionarioBuscado.setEmail(funcionario.getEmail());
+        }
+        if (funcionario.getTelefone() != null && !funcionario.getTelefone().isBlank()) {
+            funcionarioBuscado.setTelefone(funcionario.getTelefone());
+        }
+
+        repository.save(funcionarioBuscado);
+    }
+
 }

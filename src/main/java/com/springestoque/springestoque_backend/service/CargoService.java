@@ -47,5 +47,14 @@ public class CargoService {
         repository.save(cargo);
     }
 
+    public void editarCargo(Long id, Cargo cargo) {
+        Cargo cargoBuscado = obterCargoPorId(id);
+
+        if (cargo.getNome() != null && !cargo.getNome().isBlank()) {
+            cargoBuscado.setNome(cargo.getNome());
+        }
+
+       repository.save(cargoBuscado);
+    }
 
 }

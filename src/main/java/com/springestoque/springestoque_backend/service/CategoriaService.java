@@ -36,13 +36,24 @@ public class CategoriaService {
                 .collect(Collectors.toList());  // Coletando em uma lista
     }
 
-    public CategoriaBodyDTO obterCategoriaPorId(Long id) {
+    public Categoria obterCategoriaPorId(Long id) {
         Categoria categoria = repository.findById(id).orElseThrow(() -> new CargoNaoEncontradoException(id));
-        return new CategoriaBodyDTO(categoria);
+        return categoria;
     }
 
     public void cadastrarCategoria(Categoria categoria){
         repository.save(categoria);
     }
+
+    public void editarCategoria(Long id, Categoria categoria) {
+        Categoria categoriaBuscada = obterCategoriaPorId(id);
+
+        if (categoria.getNome() != null && !categoria.getNome().isBlank()) {
+            categoriaBuscada.setNome(categoria.getNome());
+        }
+
+        repository.save(categoriaBuscada);
+    }
+
 
 }
