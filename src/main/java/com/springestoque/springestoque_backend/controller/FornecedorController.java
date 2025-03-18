@@ -40,4 +40,12 @@ public class FornecedorController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PutMapping("/fornecedor/{id}")
+    public ResponseEntity editarFornecedor(@PathVariable Long id, @RequestBody Fornecedor fornecedor) {
+        servico.editarFornecedor(id, fornecedor);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+
 }

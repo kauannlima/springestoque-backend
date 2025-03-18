@@ -41,4 +41,12 @@ public class FuncionarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(funcionarioDTO);
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PutMapping("/funcionario/{id}")
+    public ResponseEntity editarFuncionario(@PathVariable Long id, @RequestBody Funcionario funcionario) {
+        servico.editarFuncionario(id, funcionario);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+
 }

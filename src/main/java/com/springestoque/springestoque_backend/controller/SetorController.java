@@ -39,4 +39,12 @@ public class SetorController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PutMapping("/setor/{id}")
+    public ResponseEntity editarSetor(@PathVariable Long id, @RequestBody Setor setor) {
+        servico.editarSetor(id, setor);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+
 }

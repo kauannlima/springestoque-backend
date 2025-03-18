@@ -1,5 +1,6 @@
 package com.springestoque.springestoque_backend.controller;
 
+import com.springestoque.springestoque_backend.domain.Usuario;
 import com.springestoque.springestoque_backend.domain.dto.FuncionarioDTO;
 import com.springestoque.springestoque_backend.domain.dto.SetorBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.UsuarioBodyDTO;
@@ -39,5 +40,13 @@ public class UsuarioController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioBodyDTO);
     }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PutMapping("/usuario/{id}")
+    public ResponseEntity editarUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+        servico.editarUsuario(id, usuario);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 
 }

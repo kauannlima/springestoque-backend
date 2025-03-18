@@ -1,5 +1,6 @@
 package com.springestoque.springestoque_backend.controller;
 
+import com.springestoque.springestoque_backend.domain.Produto;
 import com.springestoque.springestoque_backend.domain.dto.FuncionarioBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.ProdutoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.ProdutoDTO;
@@ -30,17 +31,19 @@ public class ProdutoController {
         return ResponseEntity.ok().body(servico.obterProdutosPorNome(nome));
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @GetMapping("/id/{id}")
-    public ResponseEntity<ProdutoBodyDTO> obterProdutoPorId(@PathVariable Long id) {
-        return ResponseEntity.ok().body(servico.obterProdutoPorId(id));
-    }
-
   @CrossOrigin(origins = "*", allowedHeaders = "*")
    @PostMapping
     public ResponseEntity<ProdutoBodyDTO> cadastrarProduto(@RequestBody ProdutoDTO produto){
       ProdutoBodyDTO produtoDTO = servico.cadastrarProduto(produto);
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoDTO);
     }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PutMapping("/produto/{id}")
+    public ResponseEntity editarProduto(@PathVariable Long id, @RequestBody Produto produto) {
+        servico.editarProduto(id, produto);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 
 }
