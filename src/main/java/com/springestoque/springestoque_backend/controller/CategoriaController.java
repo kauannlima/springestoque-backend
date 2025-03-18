@@ -1,5 +1,6 @@
 package com.springestoque.springestoque_backend.controller;
 
+import com.springestoque.springestoque_backend.domain.Cargo;
 import com.springestoque.springestoque_backend.domain.Categoria;
 import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.CategoriaBodyDTO;
@@ -35,6 +36,20 @@ public class CategoriaController {
     public ResponseEntity cadastrarCategoria(@RequestBody Categoria categoria){
              servico.cadastrarCategoria(categoria);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PutMapping("/{id}")
+    public ResponseEntity editarCategoria(@PathVariable Long id, @RequestBody Categoria categoria){
+        servico.editarCategoria(id, categoria);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @DeleteMapping("/{id}")
+    public ResponseEntity excluirCategoria(@PathVariable Long id) {
+        servico.excluirCategoria(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 

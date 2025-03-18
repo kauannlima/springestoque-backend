@@ -42,7 +42,7 @@ public class UsuarioController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PutMapping("/usuario/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity editarUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
         servico.editarUsuario(id, usuario);
         return ResponseEntity.status(HttpStatus.OK).build();

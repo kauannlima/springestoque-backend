@@ -39,7 +39,7 @@ public class ProdutoController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PutMapping("/produto/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity editarProduto(@PathVariable Long id, @RequestBody Produto produto) {
         servico.editarProduto(id, produto);
         return ResponseEntity.status(HttpStatus.OK).build();

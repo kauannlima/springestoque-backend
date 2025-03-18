@@ -42,7 +42,7 @@ public class FuncionarioController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PutMapping("/funcionario/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity editarFuncionario(@PathVariable Long id, @RequestBody Funcionario funcionario) {
         servico.editarFuncionario(id, funcionario);
         return ResponseEntity.status(HttpStatus.OK).build();

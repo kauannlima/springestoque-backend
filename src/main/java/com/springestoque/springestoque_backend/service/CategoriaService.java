@@ -53,6 +53,9 @@ public class CategoriaService {
         if (categoria.getNome() != null && !categoria.getNome().isBlank()) {
             categoriaBuscada.setNome(categoria.getNome());
         }
+        if (categoria.getDescricao() != null && !categoria.getDescricao().isBlank()) {
+            categoriaBuscada.setDescricao(categoria.getDescricao());
+        }
 
         repository.save(categoriaBuscada);
     }

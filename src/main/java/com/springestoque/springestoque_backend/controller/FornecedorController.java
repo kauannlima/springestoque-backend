@@ -41,7 +41,7 @@ public class FornecedorController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PutMapping("/fornecedor/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity editarFornecedor(@PathVariable Long id, @RequestBody Fornecedor fornecedor) {
         servico.editarFornecedor(id, fornecedor);
         return ResponseEntity.status(HttpStatus.OK).build();
