@@ -6,6 +6,7 @@ import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.CategoriaBodyDTO;
 import com.springestoque.springestoque_backend.exception.CargoNaoEncontradoException;
 import com.springestoque.springestoque_backend.exception.CategoriaNaoEncontradaException;
+import com.springestoque.springestoque_backend.exception.ProdutoNaoEncontradoException;
 import com.springestoque.springestoque_backend.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,11 @@ public class CategoriaService {
         return categorias.stream()
                 .map(CategoriaBodyDTO::new)  // Convertendo de Cargo para CargoBodyDTO
                 .collect(Collectors.toList());  // Coletando em uma lista
+    }
+
+    public CategoriaBodyDTO obterCategoriaPorId(Long id) {
+        Categoria categoria = repository.findById(id).orElseThrow(() -> new CargoNaoEncontradoException(id));
+        return new CategoriaBodyDTO(categoria);
     }
 
     public void cadastrarCategoria(Categoria categoria){

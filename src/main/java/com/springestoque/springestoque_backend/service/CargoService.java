@@ -1,8 +1,11 @@
 package com.springestoque.springestoque_backend.service;
 
 import com.springestoque.springestoque_backend.domain.Cargo;
+import com.springestoque.springestoque_backend.domain.Produto;
 import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
+import com.springestoque.springestoque_backend.domain.dto.ProdutoBodyDTO;
 import com.springestoque.springestoque_backend.exception.CargoNaoEncontradoException;
+import com.springestoque.springestoque_backend.exception.ProdutoNaoEncontradoException;
 import com.springestoque.springestoque_backend.repository.CargoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,8 +38,14 @@ public class CargoService {
                 .collect(Collectors.toList());  // Coletando em uma lista
     }
 
+    public Cargo obterCargoPorId(Long id) {
+        Cargo cargo = repository.findById(id).orElseThrow(() -> new CargoNaoEncontradoException(id));
+        return cargo;
+    }
+
     public void cadastrarCargo(Cargo cargo){
         repository.save(cargo);
     }
 
-    }
+
+}

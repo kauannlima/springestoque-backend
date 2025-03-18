@@ -1,10 +1,13 @@
 package com.springestoque.springestoque_backend.service;
 
 import com.springestoque.springestoque_backend.domain.Cargo;
+import com.springestoque.springestoque_backend.domain.Produto;
 import com.springestoque.springestoque_backend.domain.Setor;
 import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
+import com.springestoque.springestoque_backend.domain.dto.ProdutoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.SetorBodyDTO;
 import com.springestoque.springestoque_backend.exception.CargoNaoEncontradoException;
+import com.springestoque.springestoque_backend.exception.ProdutoNaoEncontradoException;
 import com.springestoque.springestoque_backend.exception.SetorNaoEncontradoException;
 import com.springestoque.springestoque_backend.repository.SetorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,11 @@ public class SetorService {
         return setores.stream()
                 .map(SetorBodyDTO::new)  // Convertendo de Cargo para CargoBodyDTO
                 .collect(Collectors.toList());  // Coletando em uma lista
+    }
+
+    public SetorBodyDTO obterSetorPorId(Long id) {
+        Setor setor = repository.findById(id).orElseThrow(() -> new SetorNaoEncontradoException(id));
+        return new SetorBodyDTO(setor);
     }
 
     public void cadastrarSetor(Setor setor){

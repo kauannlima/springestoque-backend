@@ -4,6 +4,7 @@ import com.springestoque.springestoque_backend.domain.Cargo;
 import com.springestoque.springestoque_backend.domain.Categoria;
 import com.springestoque.springestoque_backend.domain.Fornecedor;
 import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
+import com.springestoque.springestoque_backend.domain.dto.CategoriaBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.FornecedorBodyDTO;
 import com.springestoque.springestoque_backend.exception.CargoNaoEncontradoException;
 import com.springestoque.springestoque_backend.exception.FornecedorNaoEncontradoException;
@@ -37,6 +38,11 @@ public class FornecedorService {
         return fornecedores.stream()
                 .map(FornecedorBodyDTO::new)  // Convertendo de Cargo para CargoBodyDTO
                 .collect(Collectors.toList());  // Coletando em uma lista
+    }
+
+    public FornecedorBodyDTO obterFornecedorPorId(Long id) {
+        Fornecedor fornecedor = repository.findById(id).orElseThrow(() -> new FornecedorNaoEncontradoException(id));
+        return new FornecedorBodyDTO(fornecedor);
     }
 
     public void cadastrarFornecedor(Fornecedor fornecedor){

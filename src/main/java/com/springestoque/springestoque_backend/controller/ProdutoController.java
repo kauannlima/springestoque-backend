@@ -31,7 +31,7 @@ public class ProdutoController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<ProdutoBodyDTO> obterProdutoPorId(@PathVariable Long id) {
         return ResponseEntity.ok().body(servico.obterProdutoPorId(id));
     }

@@ -29,12 +29,19 @@ public class CargoController {
         return ResponseEntity.ok().body(servico.obterCargosPorNome(nome));
     }
 
-
   @CrossOrigin(origins = "*", allowedHeaders = "*")
    @PostMapping
     public ResponseEntity cadastrarCargo(@RequestBody Cargo cargo){
              servico.cadastrarCargo(cargo);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PutMapping("/{id}")
+    public ResponseEntity editarCargo(@PathVariable Long id, @RequestBody Cargo cargo){
+        servico.editarCargo(id, cargo);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 

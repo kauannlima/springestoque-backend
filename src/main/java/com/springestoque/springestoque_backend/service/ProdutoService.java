@@ -45,8 +45,8 @@ public class ProdutoService {
         }
 
         return produtos.stream()
-                .map(ProdutoBodyDTO::new)  // Convertendo de Cargo para CargoBodyDTO
-                .collect(Collectors.toList());  // Coletando em uma lista
+                .map(ProdutoBodyDTO::new)  
+                .collect(Collectors.toList());
     }
 
     public ProdutoBodyDTO obterProdutoPorId(Long id) {

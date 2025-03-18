@@ -2,12 +2,15 @@ package com.springestoque.springestoque_backend.service;
 
 import com.springestoque.springestoque_backend.domain.Cargo;
 import com.springestoque.springestoque_backend.domain.Funcionario;
+import com.springestoque.springestoque_backend.domain.Setor;
 import com.springestoque.springestoque_backend.domain.Usuario;
 import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
+import com.springestoque.springestoque_backend.domain.dto.SetorBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.UsuarioBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.UsuarioDTO;
 import com.springestoque.springestoque_backend.exception.CargoNaoEncontradoException;
 import com.springestoque.springestoque_backend.exception.FuncionarioNaoEncontradoException;
+import com.springestoque.springestoque_backend.exception.SetorNaoEncontradoException;
 import com.springestoque.springestoque_backend.exception.UsuarioNaoEncontradoException;
 import com.springestoque.springestoque_backend.repository.FuncionarioRepository;
 import com.springestoque.springestoque_backend.repository.UsuarioRepository;
@@ -46,6 +49,11 @@ public class UsuarioService {
         return usuarios.stream()
                 .map(UsuarioBodyDTO::new)  // Convertendo de Cargo para CargoBodyDTO
                 .collect(Collectors.toList());  // Coletando em uma lista
+    }
+
+    public UsuarioBodyDTO obterUsuarioPorId(Long id) {
+        Usuario usuario = repository.findById(id).orElseThrow(() -> new UsuarioNaoEncontradoException(id));
+        return new UsuarioBodyDTO(usuario);
     }
 
     public UsuarioBodyDTO cadastrarUsuario(UsuarioDTO dto){

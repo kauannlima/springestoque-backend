@@ -2,9 +2,11 @@ package com.springestoque.springestoque_backend.service;
 
 import com.springestoque.springestoque_backend.domain.*;
 import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
+import com.springestoque.springestoque_backend.domain.dto.FornecedorBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.FuncionarioBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.FuncionarioDTO;
 import com.springestoque.springestoque_backend.exception.CargoNaoEncontradoException;
+import com.springestoque.springestoque_backend.exception.FornecedorNaoEncontradoException;
 import com.springestoque.springestoque_backend.exception.FuncionarioNaoEncontradoException;
 import com.springestoque.springestoque_backend.repository.CargoRepository;
 import com.springestoque.springestoque_backend.repository.FuncionarioRepository;
@@ -38,6 +40,11 @@ public class FuncionarioService {
         return funcionarios.stream()
                 .map(FuncionarioBodyDTO::new)  // Convertendo de Cargo para CargoBodyDTO
                 .collect(Collectors.toList());  // Coletando em uma lista
+    }
+
+    public FuncionarioBodyDTO obterFuncionarioPorId(Long id) {
+        Funcionario funcionario = repository.findById(id).orElseThrow(() -> new FuncionarioNaoEncontradoException(id));
+        return new FuncionarioBodyDTO(funcionario);
     }
 
 
