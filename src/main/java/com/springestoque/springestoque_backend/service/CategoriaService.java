@@ -6,9 +6,11 @@ import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.CategoriaBodyDTO;
 import com.springestoque.springestoque_backend.exception.CargoNaoEncontradoException;
 import com.springestoque.springestoque_backend.exception.CategoriaNaoEncontradaException;
+import com.springestoque.springestoque_backend.exception.EntidadeVinculadaException;
 import com.springestoque.springestoque_backend.exception.ProdutoNaoEncontradoException;
 import com.springestoque.springestoque_backend.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,6 +56,16 @@ public class CategoriaService {
 
         repository.save(categoriaBuscada);
     }
+
+    public void excluirCategoria(Long id) {
+        Categoria categoria = obterCategoriaPorId(id);
+        try {
+            repository.delete(categoria);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeVinculadaException("Não é possível excluir a categoria, pois ela está vinculada a um ou mais produtos.");
+        }
+    }
+
 
 
 }

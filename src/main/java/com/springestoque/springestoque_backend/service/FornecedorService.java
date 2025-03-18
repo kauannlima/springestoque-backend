@@ -7,9 +7,11 @@ import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.CategoriaBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.FornecedorBodyDTO;
 import com.springestoque.springestoque_backend.exception.CargoNaoEncontradoException;
+import com.springestoque.springestoque_backend.exception.EntidadeVinculadaException;
 import com.springestoque.springestoque_backend.exception.FornecedorNaoEncontradoException;
 import com.springestoque.springestoque_backend.repository.FornecedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -61,5 +63,15 @@ public class FornecedorService {
 
         repository.save(fornecedorBuscado);
     }
+
+    public void excluirFornecedor(Long id) {
+        Fornecedor fornecedor = obterFornecedorPorId(id);
+        try {
+            repository.delete(fornecedor);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeVinculadaException("Não é possível excluir o fornecedor, pois ele está vinculado a um ou mais produtos.");
+        }
+    }
+
 
 }

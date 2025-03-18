@@ -1,16 +1,16 @@
 package com.springestoque.springestoque_backend.service;
 
-import com.springestoque.springestoque_backend.domain.*;
-import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
-import com.springestoque.springestoque_backend.domain.dto.FornecedorBodyDTO;
+import com.springestoque.springestoque_backend.domain.Cargo;
+import com.springestoque.springestoque_backend.domain.Funcionario;
 import com.springestoque.springestoque_backend.domain.dto.FuncionarioBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.FuncionarioDTO;
 import com.springestoque.springestoque_backend.exception.CargoNaoEncontradoException;
-import com.springestoque.springestoque_backend.exception.FornecedorNaoEncontradoException;
+import com.springestoque.springestoque_backend.exception.EntidadeVinculadaException;
 import com.springestoque.springestoque_backend.exception.FuncionarioNaoEncontradoException;
 import com.springestoque.springestoque_backend.repository.CargoRepository;
 import com.springestoque.springestoque_backend.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -77,5 +77,15 @@ public class FuncionarioService {
 
         repository.save(funcionarioBuscado);
     }
+
+    public void excluirFuncionario(Long id) {
+        Funcionario funcionario = obterFuncionarioPorId(id);
+        try {
+            repository.delete(funcionario);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeVinculadaException("Não é possível excluir o funcionário, pois ele está vinculado a um usuário.");
+        }
+    }
+
 
 }

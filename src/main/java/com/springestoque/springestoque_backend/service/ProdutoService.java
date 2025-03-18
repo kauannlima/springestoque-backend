@@ -7,14 +7,12 @@ import com.springestoque.springestoque_backend.domain.Produto;
 import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.ProdutoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.ProdutoDTO;
-import com.springestoque.springestoque_backend.exception.CargoNaoEncontradoException;
-import com.springestoque.springestoque_backend.exception.CategoriaNaoEncontradaException;
-import com.springestoque.springestoque_backend.exception.FornecedorNaoEncontradoException;
-import com.springestoque.springestoque_backend.exception.ProdutoNaoEncontradoException;
+import com.springestoque.springestoque_backend.exception.*;
 import com.springestoque.springestoque_backend.repository.CategoriaRepository;
 import com.springestoque.springestoque_backend.repository.FornecedorRepository;
 import com.springestoque.springestoque_backend.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -85,6 +83,23 @@ public class ProdutoService {
 
         repository.save(produtoBuscado);
     }
+
+    public void excluirProduto(Long id) {
+        Produto produto = obterProdutoPorId(id);
+        if (produto.getCategoria() != null) {
+            produto.setCategoria(null);  // Desvincula a categoria
+        }
+        if (produto.getFornecedor() != null) {
+            produto.setFornecedor(null);  // Desvincula o fornecedor
+        }
+        try {
+            // Agora que o produto está desvinculado, podemos excluir sem problema
+            repository.delete(produto);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeVinculadaException("Erro ao tentar excluir o produto.");
+        }
+    }
+
 
 
 

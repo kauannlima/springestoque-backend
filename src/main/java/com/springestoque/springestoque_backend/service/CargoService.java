@@ -5,9 +5,11 @@ import com.springestoque.springestoque_backend.domain.Produto;
 import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.ProdutoBodyDTO;
 import com.springestoque.springestoque_backend.exception.CargoNaoEncontradoException;
+import com.springestoque.springestoque_backend.exception.EntidadeVinculadaException;
 import com.springestoque.springestoque_backend.exception.ProdutoNaoEncontradoException;
 import com.springestoque.springestoque_backend.repository.CargoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -56,5 +58,15 @@ public class CargoService {
 
        repository.save(cargoBuscado);
     }
+
+    public void excluirCargo(Long id) {
+        Cargo cargo = obterCargoPorId(id);
+        try {
+            repository.delete(cargo);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeVinculadaException("Não é possível excluir o cargo, pois ele está vinculado a um ou mais funcionários.");
+        }
+    }
+
 
 }

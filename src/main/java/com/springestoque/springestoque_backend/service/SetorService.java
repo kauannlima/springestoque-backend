@@ -7,6 +7,7 @@ import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.ProdutoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.SetorBodyDTO;
 import com.springestoque.springestoque_backend.exception.CargoNaoEncontradoException;
+import com.springestoque.springestoque_backend.exception.EntidadeVinculadaException;
 import com.springestoque.springestoque_backend.exception.ProdutoNaoEncontradoException;
 import com.springestoque.springestoque_backend.exception.SetorNaoEncontradoException;
 import com.springestoque.springestoque_backend.repository.SetorRepository;
@@ -56,5 +57,16 @@ public class SetorService {
 
         repository.save(setorBuscado);
     }
+
+    public void excluirSetor(Long id) {
+        Setor setor = obterSetorPorId(id);
+
+//        if (/* set a condition for checking dependency */) {
+//            throw new EntidadeVinculadaException("Setor", id);
+//        }
+
+       repository.delete(setor);
+    }
+
 
 }

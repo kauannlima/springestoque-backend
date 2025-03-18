@@ -8,13 +8,11 @@ import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.SetorBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.UsuarioBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.UsuarioDTO;
-import com.springestoque.springestoque_backend.exception.CargoNaoEncontradoException;
-import com.springestoque.springestoque_backend.exception.FuncionarioNaoEncontradoException;
-import com.springestoque.springestoque_backend.exception.SetorNaoEncontradoException;
-import com.springestoque.springestoque_backend.exception.UsuarioNaoEncontradoException;
+import com.springestoque.springestoque_backend.exception.*;
 import com.springestoque.springestoque_backend.repository.FuncionarioRepository;
 import com.springestoque.springestoque_backend.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -88,5 +86,22 @@ public class UsuarioService {
 
         repository.save(usuarioBuscado);
     }
+
+    public void excluirUsuario(Long id) {
+        Usuario usuario = obterUsuarioPorId(id);
+
+        // Desvincula o funcionário antes de excluir o usuário
+        if (usuario.getFuncionario() != null) {
+            usuario.setFuncionario(null);  // Desvincula o funcionário
+        }
+
+        try {
+            // Agora o usuário pode ser excluído sem problema
+            repository.delete(usuario);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeVinculadaException("Erro ao tentar excluir o usuário.");
+        }
+    }
+
 
 }

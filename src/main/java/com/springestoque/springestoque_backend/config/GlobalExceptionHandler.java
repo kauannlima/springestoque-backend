@@ -54,6 +54,11 @@ public class GlobalExceptionHandler {
         return handleNotFoundException("Usuario não encontrado", ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(EntidadeVinculadaException.class)
+    public ResponseEntity<String> handleEntidadeVinculada(EntidadeVinculadaException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErroResponse> handleGenericException(Exception ex) {
         return handleNotFoundException("Erro inesperado", ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
