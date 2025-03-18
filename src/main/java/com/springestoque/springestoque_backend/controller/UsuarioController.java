@@ -48,5 +48,13 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @DeleteMapping("/{id}")
+    public ResponseEntity excluirUsuario(@PathVariable Long id) {
+        servico.excluirUsuario(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+
 
 }

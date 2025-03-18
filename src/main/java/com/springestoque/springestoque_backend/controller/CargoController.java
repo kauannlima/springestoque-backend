@@ -44,6 +44,11 @@ public class CargoController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @DeleteMapping("/{id}")
+    public ResponseEntity excluirCargo(@PathVariable Long id) {
+        servico.excluirCargo(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 
 }
