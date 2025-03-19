@@ -63,7 +63,7 @@ public class ProdutoService {
 
         produto = repository.save(produto);
 
-        return new ProdutoBodyDTO(produto.getNome(), produto.getCategoria().getNome(),
+        return new ProdutoBodyDTO(produto.getId(),produto.getNome(), produto.getCategoria().getNome(),
                 produto.getDescricao(), produto.getQuantidadeEmEstoque(),
                 produto.getFornecedor().getNome());
     }

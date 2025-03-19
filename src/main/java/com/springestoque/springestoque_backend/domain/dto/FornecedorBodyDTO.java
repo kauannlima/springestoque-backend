@@ -3,6 +3,7 @@ package com.springestoque.springestoque_backend.domain.dto;
 import com.springestoque.springestoque_backend.domain.Fornecedor;
 
 public record FornecedorBodyDTO(
+        Long id,
         String nome,
         String endereco,
         String telefone,
@@ -11,6 +12,7 @@ public record FornecedorBodyDTO(
 
     public FornecedorBodyDTO(Fornecedor fornecedor) {
         this(
+                fornecedor.getId(),
                 fornecedor.getNome(),
                 fornecedor.getEndereco(),
                 fornecedor.getTelefone(),

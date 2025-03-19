@@ -54,22 +54,19 @@ public class UsuarioService {
         return usuario;
     }
 
-    public UsuarioBodyDTO cadastrarUsuario(UsuarioDTO dto){
-
+    public UsuarioBodyDTO cadastrarUsuario(UsuarioDTO dto) {
         String senhaCriptografada = passwordEncoder.encode(dto.senha());
 
         Funcionario funcionario = funcionarioRepository.findById(dto.funcionario())
                 .orElseThrow(() -> new FuncionarioNaoEncontradoException(dto.funcionario()));
 
-
         Usuario usuario = new Usuario(null, funcionario, dto.nomeDoUsuario(), dto.email(), senhaCriptografada);
-
 
         usuario = repository.save(usuario);
 
-        return new UsuarioBodyDTO(funcionario.getNome(),usuario.getNomeDeUsuario());
-
+        return new UsuarioBodyDTO(usuario.getId(), usuario.getNomeDeUsuario(), usuario.getEmail());
     }
+
 
     public void editarUsuario(Long id, Usuario usuario) {
         Usuario usuarioBuscado = obterUsuarioPorId(id);

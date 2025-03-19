@@ -57,7 +57,7 @@ public class FuncionarioService {
 
         funcionario = repository.save(funcionario);
 
-        return new FuncionarioBodyDTO(funcionario.getNome(), funcionario.getCargo().getNome(),
+        return new FuncionarioBodyDTO(funcionario.getId(), funcionario.getNome(), funcionario.getCargo().getNome(),
                 funcionario.getEmail(), funcionario.getTelefone());
 
     }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.springestoque.springestoque_backend.domain.Produto;
 
 public record ProdutoBodyDTO(
+        Long id,
         String nome,
         String categoria,
         String descricao,
@@ -12,6 +13,7 @@ public record ProdutoBodyDTO(
 ) {
     public ProdutoBodyDTO(Produto produto) {
         this(
+                produto.getId(),
                 produto.getNome(),
                 produto.getCategoria().getNome(),
                 produto.getDescricao(),
