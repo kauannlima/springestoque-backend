@@ -2,10 +2,9 @@ package com.springestoque.springestoque_backend.domain;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 
 @Entity
+@Table(name = "cargos")
 public class Cargo {
 
     @Id

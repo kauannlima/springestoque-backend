@@ -4,6 +4,7 @@ package com.springestoque.springestoque_backend.domain;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "produtos")
 public class Produto {
 
     @Id

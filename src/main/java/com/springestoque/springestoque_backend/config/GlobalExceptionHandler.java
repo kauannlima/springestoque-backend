@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    private ResponseEntity<ErroResponse> handleNotFoundException(String mensagem, String detalhe, HttpStatus status) {
+    private ResponseEntity<ErroResponse> buildErrorResponse(String mensagem, String detalhe, HttpStatus status) {
         ErroResponse erroResponse = new ErroResponse(
                 status.value(),
                 mensagem,
@@ -20,47 +20,46 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CargoNaoEncontradoException.class)
     public ResponseEntity<ErroResponse> handleCargoNaoEncontradoException(CargoNaoEncontradoException ex) {
-        return handleNotFoundException("Cargo não encontrado", ex.getMessage(), HttpStatus.NOT_FOUND);
+        return buildErrorResponse("Cargo não encontrado", ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(CategoriaNaoEncontradaException.class)
     public ResponseEntity<ErroResponse> handleCategoriaNaoEncontradaException(CategoriaNaoEncontradaException ex) {
-        return handleNotFoundException("Categoria não encontrada", ex.getMessage(), HttpStatus.NOT_FOUND);
+        return buildErrorResponse("Categoria não encontrada", ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(FornecedorNaoEncontradoException.class)
     public ResponseEntity<ErroResponse> handleFornecedorNaoEncontradoException(FornecedorNaoEncontradoException ex) {
-        return handleNotFoundException("Fornecedor não encontrado", ex.getMessage(), HttpStatus.NOT_FOUND);
+        return buildErrorResponse("Fornecedor não encontrado", ex.getMessage(), HttpStatus.NOT_FOUND);
     }
-
 
     @ExceptionHandler(FuncionarioNaoEncontradoException.class)
     public ResponseEntity<ErroResponse> handleFuncionarioNaoEncontradoException(FuncionarioNaoEncontradoException ex) {
-        return handleNotFoundException("Funcionario não encontrado", ex.getMessage(), HttpStatus.NOT_FOUND);
+        return buildErrorResponse("Funcionário não encontrado", ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ProdutoNaoEncontradoException.class)
     public ResponseEntity<ErroResponse> handleProdutoNaoEncontradoException(ProdutoNaoEncontradoException ex) {
-        return handleNotFoundException("Produto não encontrado", ex.getMessage(), HttpStatus.NOT_FOUND);
+        return buildErrorResponse("Produto não encontrado", ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(SetorNaoEncontradoException.class)
     public ResponseEntity<ErroResponse> handleSetorNaoEncontradoException(SetorNaoEncontradoException ex) {
-        return handleNotFoundException("Setor não encontrado", ex.getMessage(), HttpStatus.NOT_FOUND);
+        return buildErrorResponse("Setor não encontrado", ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UsuarioNaoEncontradoException.class)
     public ResponseEntity<ErroResponse> handleUsuarioNaoEncontradoException(UsuarioNaoEncontradoException ex) {
-        return handleNotFoundException("Usuario não encontrado", ex.getMessage(), HttpStatus.NOT_FOUND);
+        return buildErrorResponse("Usuário não encontrado", ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(EntidadeVinculadaException.class)
-    public ResponseEntity<String> handleEntidadeVinculada(EntidadeVinculadaException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    public ResponseEntity<ErroResponse> handleEntidadeVinculadaException(EntidadeVinculadaException ex) {
+        return buildErrorResponse("Entidade Vinculada", ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErroResponse> handleGenericException(Exception ex) {
-        return handleNotFoundException("Erro inesperado", ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return buildErrorResponse("Erro inesperado", ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -3,6 +3,7 @@ package com.springestoque.springestoque_backend.domain;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "usuarios")
 public class Usuario {
 
     @Id

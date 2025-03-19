@@ -53,12 +53,11 @@ public class FuncionarioService {
         Cargo cargo = cargoRepository.findById(dto.cargo())
                 .orElseThrow(() -> new CargoNaoEncontradoException(dto.cargo()));
 
-        Funcionario funcionario = new Funcionario(null, dto.nome(), cargo, dto.email(), dto.telefone());
+        Funcionario funcionario = new Funcionario(null, dto.nome(), cargo, dto.telefone());
 
         funcionario = repository.save(funcionario);
 
-        return new FuncionarioBodyDTO(funcionario.getId(), funcionario.getNome(), funcionario.getCargo().getNome(),
-                funcionario.getEmail(), funcionario.getTelefone());
+        return new FuncionarioBodyDTO(funcionario.getId(), funcionario.getNome(), funcionario.getCargo().getNome(), funcionario.getTelefone());
 
     }
 
@@ -67,9 +66,6 @@ public class FuncionarioService {
 
         if (funcionario.getNome() != null && !funcionario.getNome().isBlank()) {
             funcionarioBuscado.setNome(funcionario.getNome());
-        }
-        if (funcionario.getEmail() != null && !funcionario.getEmail().isBlank()) {
-            funcionarioBuscado.setEmail(funcionario.getEmail());
         }
         if (funcionario.getTelefone() != null && !funcionario.getTelefone().isBlank()) {
             funcionarioBuscado.setTelefone(funcionario.getTelefone());

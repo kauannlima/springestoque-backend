@@ -6,7 +6,6 @@ public record FuncionarioBodyDTO(
         Long id,
         String nome,
         String cargo,
-        String email,
         String telefone
 ) {
 
@@ -15,7 +14,6 @@ public record FuncionarioBodyDTO(
                 funcionario.getId(),
                 funcionario.getNome(),
                 funcionario.getCargo().getNome(),
-                funcionario.getEmail(),
                 funcionario.getTelefone()
         );
     }

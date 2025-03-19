@@ -3,6 +3,7 @@ package com.springestoque.springestoque_backend.domain;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "funcionarios")
 public class Funcionario {
 
     @Id
@@ -13,20 +14,17 @@ public class Funcionario {
     private String nome;
 
     @ManyToOne
-    @JoinColumn(name = "cargo", nullable = false)
+    @JoinColumn(name = "cargo_id", nullable = false)
     private Cargo cargo;
 
-    @Column
-    private String email;
 
     @Column
     private String telefone;
 
-    public Funcionario(Long id, String nome, Cargo cargo, String email, String telefone) {
+    public Funcionario(Long id, String nome, Cargo cargo, String telefone) {
         this.id = id;
         this.nome = nome;
         this.cargo = cargo;
-        this.email = email;
         this.telefone = telefone;
     }
 
@@ -57,13 +55,6 @@ public class Funcionario {
         this.cargo = cargo;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getTelefone() {
         return telefone;

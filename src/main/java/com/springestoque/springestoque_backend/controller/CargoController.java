@@ -36,7 +36,6 @@ public class CargoController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/{id}")
     public ResponseEntity editarCargo(@PathVariable Long id, @RequestBody Cargo cargo){
