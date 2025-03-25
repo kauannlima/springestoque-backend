@@ -20,10 +20,10 @@ public class MovimentacaoEstoque {
 
     @Enumerated(EnumType.STRING) // Salva o nome da constante
     @Column(name = "tipo_de_movimentacao", nullable = false)
-    private TipoMovimentacaoEnum tipo;
+    private TipoMovimentacaoEnum tipoDeMovimentacao;
 
     @Column(name = "data_da_movimentacao", nullable = false)
-    private LocalDate dataMovimentacao;
+    private LocalDate dataDaMovimentacao;
 
     @ManyToOne
     @JoinColumn(name = "funcionario_id", nullable = false)
@@ -37,8 +37,8 @@ public class MovimentacaoEstoque {
         this.id = id;
         this.produto = produto;
         this.quantidadeMovimentada = quantidadeMovimentada;
-        this.tipo = tipo;
-        this.dataMovimentacao = dataMovimentacao;
+        this.tipoDeMovimentacao = tipo;
+        this.dataDaMovimentacao = dataMovimentacao;
         this.funcionario = funcionario;
         this.setor = setor;
     }
@@ -70,20 +70,20 @@ public class MovimentacaoEstoque {
         this.quantidadeMovimentada = quantidadeMovimentada;
     }
 
-    public TipoMovimentacaoEnum getTipo() {
-        return tipo;
+    public TipoMovimentacaoEnum getTipoDeMovimentacao() {
+        return tipoDeMovimentacao;
     }
 
-    public void setTipo(TipoMovimentacaoEnum tipo) {
-        this.tipo = tipo;
+    public void setTipoDeMovimentacao(TipoMovimentacaoEnum tipoDeMovimentacao) {
+        this.tipoDeMovimentacao = tipoDeMovimentacao;
     }
 
-    public LocalDate getDataMovimentacao() {
-        return dataMovimentacao;
+    public LocalDate getDataDaMovimentacao() {
+        return dataDaMovimentacao;
     }
 
-    public void setDataMovimentacao(LocalDate dataMovimentacao) {
-        this.dataMovimentacao = dataMovimentacao;
+    public void setDataDaMovimentacao(LocalDate dataDaMovimentacao) {
+        this.dataDaMovimentacao = dataDaMovimentacao;
     }
 
     public Funcionario getFuncionario() {

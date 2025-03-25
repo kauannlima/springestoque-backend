@@ -22,7 +22,7 @@ public class Produto {
     private String descricao;
 
     @Column(name = "quantidade_em_estoque", nullable = false)
-    private Integer quantidadeEmEstoque;
+    private Integer quantidadeEmEstoque = 0;
 
     @ManyToOne
     @JoinColumn(name = "fornecedor_id", nullable = false)
@@ -36,7 +36,7 @@ public class Produto {
         this.nome = nome;
         this.categoria = categoria;
         this.descricao = descricao;
-        this.quantidadeEmEstoque = quantidadeEmEstoque;
+        this.quantidadeEmEstoque = quantidadeEmEstoque != null ? quantidadeEmEstoque : 0;  // Garante que a quantidade nunca seja null
         this.fornecedor = fornecedor;
     }
 

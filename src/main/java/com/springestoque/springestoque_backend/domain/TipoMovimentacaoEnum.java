@@ -1,5 +1,7 @@
 package com.springestoque.springestoque_backend.domain;
 
+import com.springestoque.springestoque_backend.exception.TipoMovimentacaoNotFoundException;
+
 public enum TipoMovimentacaoEnum {
 
     ENTRADA("Compra (entrada)"),
@@ -11,12 +13,17 @@ public enum TipoMovimentacaoEnum {
         this.tipo = tipo;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
     public static TipoMovimentacaoEnum fromString(String text) {
         for (TipoMovimentacaoEnum tipoMovimentacaoEnum : TipoMovimentacaoEnum.values()) {
             if (tipoMovimentacaoEnum.tipo.equalsIgnoreCase(text)) {
                 return tipoMovimentacaoEnum;
             }
         }
-        throw new IllegalArgumentException("Nenhum tipo encontrada para a string fornecida: " + text);
+        // Lançando a exceção personalizada
+        throw new TipoMovimentacaoNotFoundException(text);
     }
 }
