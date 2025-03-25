@@ -59,7 +59,7 @@ public class ProdutoService {
         Fornecedor fornecedor = fornecedorRepository.findById(dto.fornecedor())
                 .orElseThrow(() -> new FornecedorNaoEncontradoException(dto.fornecedor()));
 
-        Produto produto = new Produto(null, dto.nome(), categoria, dto.descricao(), dto.quantidadeEmEstoque(), fornecedor);
+        Produto produto = new Produto(null, dto.nome(), categoria, dto.descricao(), 0, fornecedor);
 
         produto = repository.save(produto);
 

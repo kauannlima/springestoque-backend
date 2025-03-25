@@ -69,7 +69,7 @@ public class MovimentacaoEstoqueService {
 
         // Retorna o DTO com as informações da movimentação
         return new MovimentacaoEstoqueBodyDTO(
-                movimentacaoDTO.id(),
+                movimentacaoRealizada.getId(),
                 produto.getNome(),
                 movimentacaoDTO.quantidadeMovimentada(),
                 movimentacaoDTO.tipoDeMovimentacao().getTipo(),
