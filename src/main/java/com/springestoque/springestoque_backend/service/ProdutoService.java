@@ -72,17 +72,16 @@ public class ProdutoService {
         Produto produtoBuscado = obterProdutoPorId(id);
 
         if (produto.getNome() != null && !produto.getNome().isBlank()) {
-            produtoBuscado.setNome(produto.getNome());
+            produtoBuscado.setNome(produto.getNome());  // Corrigido aqui para usar o valor de produto
         }
         if (produto.getDescricao() != null && !produto.getDescricao().isBlank()) {
-            produtoBuscado.setDescricao(produto.getDescricao());
-        }
-        if (produto.getQuantidadeEmEstoque() != null) {
-            produtoBuscado.setQuantidadeEmEstoque(produto.getQuantidadeEmEstoque());
+            produtoBuscado.setDescricao(produto.getDescricao());  // Corrigido aqui também
         }
 
+        // Não alterando a quantidade em estoque
         repository.save(produtoBuscado);
     }
+
 
     public void excluirProduto(Long id) {
         Produto produto = obterProdutoPorId(id);

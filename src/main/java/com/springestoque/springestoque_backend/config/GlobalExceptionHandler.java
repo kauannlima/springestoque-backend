@@ -58,6 +58,16 @@ public class GlobalExceptionHandler {
         return buildErrorResponse("Entidade Vinculada", ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(EstoqueInsuficienteException.class)
+    public ResponseEntity<String> handleEstoqueInsuficiente(EstoqueInsuficienteException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(TipoMovimentacaoNotFoundException.class)
+    public ResponseEntity<String> handleTipoMovimentacaoNotFound(TipoMovimentacaoNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErroResponse> handleGenericException(Exception ex) {
         return buildErrorResponse("Erro inesperado", ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

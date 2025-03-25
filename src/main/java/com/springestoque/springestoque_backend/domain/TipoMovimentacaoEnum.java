@@ -16,14 +16,15 @@ public enum TipoMovimentacaoEnum {
     public String getTipo() {
         return tipo;
     }
-
     public static TipoMovimentacaoEnum fromString(String text) {
-        for (TipoMovimentacaoEnum tipoMovimentacaoEnum : TipoMovimentacaoEnum.values()) {
-            if (tipoMovimentacaoEnum.tipo.equalsIgnoreCase(text)) {
-                return tipoMovimentacaoEnum;
+        if (text.equals(text.toLowerCase())) {
+            for (TipoMovimentacaoEnum tipoMovimentacaoEnum : TipoMovimentacaoEnum.values()) {
+                if (tipoMovimentacaoEnum.tipo.equalsIgnoreCase(text)) {
+                    return tipoMovimentacaoEnum;
+                }
             }
         }
-        // Lançando a exceção personalizada
         throw new TipoMovimentacaoNotFoundException(text);
     }
+
 }

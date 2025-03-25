@@ -3,6 +3,7 @@ package com.springestoque.springestoque_backend.controller;
 import com.springestoque.springestoque_backend.domain.Cargo;
 import com.springestoque.springestoque_backend.domain.MovimentacaoEstoque;
 import com.springestoque.springestoque_backend.domain.dto.MovimentacaoEstoqueBodyDTO;
+import com.springestoque.springestoque_backend.domain.dto.MovimentacaoEstoqueDTO;
 import com.springestoque.springestoque_backend.service.CategoriaService;
 import com.springestoque.springestoque_backend.service.MovimentacaoEstoqueService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,9 @@ public class MovimentacaoEstoqueController {
     private MovimentacaoEstoqueService servico;
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PostMapping("/{id}")
-    public ResponseEntity realizarMovimentacao(@PathVariable Long id, @RequestBody MovimentacaoEstoque movimentacao){
-        return ResponseEntity.status(HttpStatus.OK).body(servico.realizarMovimentacao(id, movimentacao));
+    @PostMapping
+    public ResponseEntity realizarMovimentacao(@RequestBody MovimentacaoEstoqueDTO movimentacao){
+        return ResponseEntity.status(HttpStatus.OK).body(servico.realizarMovimentacao( movimentacao));
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
