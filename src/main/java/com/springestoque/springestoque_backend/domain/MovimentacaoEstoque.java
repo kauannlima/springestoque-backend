@@ -30,7 +30,7 @@ public class MovimentacaoEstoque {
     private Funcionario funcionario;
 
     @ManyToOne
-    @JoinColumn(name = "setor_destino_id ")
+    @JoinColumn(name = "setor_destino_id")
     private Setor setor;
 
     public MovimentacaoEstoque(Long id, Produto produto, Integer quantidadeMovimentada, TipoMovimentacaoEnum tipo, LocalDate dataMovimentacao, Funcionario funcionario, Setor setor) {

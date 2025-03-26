@@ -17,10 +17,11 @@ public record MovimentacaoEstoqueBodyDTO(
         this(movimentacaoEstoque.getId(),
                 movimentacaoEstoque.getProduto().getNome(),
                 movimentacaoEstoque.getQuantidadeMovimentada(),
-                movimentacaoEstoque.getTipoDeMovimentacao().getTipo(),  // Agora pega o valor do tipo do Enum
+                movimentacaoEstoque.getTipoDeMovimentacao().getTipo(),
                 movimentacaoEstoque.getDataDaMovimentacao(),
                 movimentacaoEstoque.getFuncionario().getNome(),
-                movimentacaoEstoque.getSetor().getNome());
+                movimentacaoEstoque.getSetor() != null ? movimentacaoEstoque.getSetor().getNome() : "SETOR NÃO DEFINIDO");
     }
 }
+
 

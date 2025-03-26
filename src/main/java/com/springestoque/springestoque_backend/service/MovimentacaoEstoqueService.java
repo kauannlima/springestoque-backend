@@ -10,6 +10,8 @@ import com.springestoque.springestoque_backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MovimentacaoEstoqueService {
 
@@ -24,6 +26,16 @@ public class MovimentacaoEstoqueService {
 
     @Autowired
     private SetorRepository setorRepository;
+
+    public List<MovimentacaoEstoqueBodyDTO> obterTodasMovimentacoes() {
+        return repository.findAll().stream().map(MovimentacaoEstoqueBodyDTO::new).toList();
+    }
+
+
+    public MovimentacaoEstoque obterMovimentacaoEstoquePorId(Long id) {
+        MovimentacaoEstoque movimentacaoEstoque = repository.findById(id).orElseThrow(() -> new MovimentacaoEstoqueNaoEncontradaException(id));
+        return movimentacaoEstoque;
+    }
 
 
     public MovimentacaoEstoqueBodyDTO realizarMovimentacao(MovimentacaoEstoqueDTO movimentacaoDTO) {
@@ -44,7 +56,7 @@ public class MovimentacaoEstoqueService {
         // Verifica se há estoque suficiente para o tipo "saída"
         if (movimentacaoDTO.tipoDeMovimentacao().equals(TipoMovimentacaoEnum.SAIDA)) {
             if (produto.getQuantidadeEmEstoque() < movimentacaoDTO.quantidadeMovimentada()) {
-                throw new EstoqueInsuficienteException(produto.getId(), produto.getQuantidadeEmEstoque());
+                throw new EstoqueInsuficienteException(produto.getId(), produto.getQuantidadeEmEstoque(), movimentacaoDTO.quantidadeMovimentada());
             }
         }
 
@@ -78,5 +90,30 @@ public class MovimentacaoEstoqueService {
                 setor != null ? setor.getNome() : null
         );
     }
+
+    public void cancelarMovimentacao(Long id) {
+        MovimentacaoEstoque movimentacaoBuscada = obterMovimentacaoEstoquePorId(id);
+
+        Produto produto = produtoRepository.findById(movimentacaoBuscada.getProduto().getId())
+                .orElseThrow(() -> new ProdutoNaoEncontradoException(movimentacaoBuscada.getProduto().getId()));
+
+        // Se a movimentação for de ENTRADA, verifica se há estoque suficiente para excluir
+        if (movimentacaoBuscada.getTipoDeMovimentacao().equals(TipoMovimentacaoEnum.ENTRADA) &&
+                produto.getQuantidadeEmEstoque() < movimentacaoBuscada.getQuantidadeMovimentada()) {
+            throw new EstoqueInsuficienteException( produto.getQuantidadeEmEstoque(), movimentacaoBuscada.getQuantidadeMovimentada());
+        }
+
+        // Ajusta a quantidade do estoque ao excluir a movimentação
+        if (movimentacaoBuscada.getTipoDeMovimentacao().equals(TipoMovimentacaoEnum.ENTRADA)) {
+            produto.setQuantidadeEmEstoque(produto.getQuantidadeEmEstoque() - movimentacaoBuscada.getQuantidadeMovimentada());
+        } else {
+            produto.setQuantidadeEmEstoque(produto.getQuantidadeEmEstoque() + movimentacaoBuscada.getQuantidadeMovimentada());
+        }
+
+        // Salva a atualização e remove a movimentação
+        produtoRepository.save(produto);
+        repository.delete(movimentacaoBuscada);
+    }
+
 
 }
