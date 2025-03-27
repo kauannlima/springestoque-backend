@@ -61,15 +61,5 @@ public class SetorService {
         repository.save(setorBuscado);
     }
 
-    public void excluirSetor(Long id) {
-        Setor setor = obterSetorPorId(id);
-
-        try {
-            repository.delete(setor);
-        } catch (DataIntegrityViolationException e) {
-            throw new EntidadeVinculadaException("Não é possível excluir o setor, pois ele está vinculado a uma movimentação.");
-        }
-    }
-
 
 }

@@ -43,6 +43,7 @@ public class FornecedorService {
                 .collect(Collectors.toList());  // Coletando em uma lista
     }
 
+    // Metodo apenas para uso interno, não será criado um endpoit para essa função
     public  Fornecedor obterFornecedorPorId(Long id) {
         Fornecedor fornecedor = repository.findById(id).orElseThrow(() -> new FornecedorNaoEncontradoException(id));
         return fornecedor;

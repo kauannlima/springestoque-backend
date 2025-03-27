@@ -42,7 +42,7 @@ public class MovimentacaoEstoqueService {
         return repository.findAll().stream().filter(m -> m.getTipoDeMovimentacao().equals(TipoMovimentacaoEnum.SAIDA)).map(MovimentacaoEstoqueBodyDTO::new).toList();
     }
 
-    // Metodo apenas para uso interno, não será criado um end poit para essa função
+    // Metodo apenas para uso interno, não será criado um endpoit para essa função
     public MovimentacaoEstoque obterMovimentacaoEstoquePorId(Long id) {
 
         MovimentacaoEstoque movimentacaoEstoque = repository.findById(id).orElseThrow(() -> new MovimentacaoEstoqueNaoEncontradaException(id));

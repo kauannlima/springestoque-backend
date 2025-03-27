@@ -43,6 +43,7 @@ public class FuncionarioService {
                 .collect(Collectors.toList());  // Coletando em uma lista
     }
 
+    // Metodo apenas para uso interno, não será criado um endpoit para essa função
     public Funcionario obterFuncionarioPorId(Long id) {
         Funcionario funcionario = repository.findById(id).orElseThrow(() -> new FuncionarioNaoEncontradoException(id));
         return funcionario;

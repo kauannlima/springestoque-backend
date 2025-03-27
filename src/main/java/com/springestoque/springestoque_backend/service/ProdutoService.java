@@ -48,6 +48,7 @@ public class ProdutoService {
                 .collect(Collectors.toList());
     }
 
+    // Metodo apenas para uso interno, não será criado um endpoit para essa função
     public Produto obterProdutoPorId(Long id) {
         Produto produto = repository.findById(id).orElseThrow(() -> new ProdutoNaoEncontradoException(id));
         return produto;
