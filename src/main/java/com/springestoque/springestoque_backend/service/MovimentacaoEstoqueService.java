@@ -27,12 +27,24 @@ public class MovimentacaoEstoqueService {
     @Autowired
     private SetorRepository setorRepository;
 
+    //Getter geral
     public List<MovimentacaoEstoqueBodyDTO> obterTodasMovimentacoes() {
         return repository.findAll().stream().map(MovimentacaoEstoqueBodyDTO::new).toList();
     }
 
+    //Getter apenas para movimentações de entarda
+    public List<MovimentacaoEstoqueBodyDTO> obterTodasMovimentacoesDeEntrada() {
+        return repository.findAll().stream().filter(m -> m.getTipoDeMovimentacao().equals(TipoMovimentacaoEnum.ENTRADA)).map(MovimentacaoEstoqueBodyDTO::new).toList();
+    }
 
+    //Getter apenas para movimentações de saida
+    public List<MovimentacaoEstoqueBodyDTO> obterTodasMovimentacoesDeSaida() {
+        return repository.findAll().stream().filter(m -> m.getTipoDeMovimentacao().equals(TipoMovimentacaoEnum.SAIDA)).map(MovimentacaoEstoqueBodyDTO::new).toList();
+    }
+
+    // Metodo apenas para uso interno, não será criado um end poit para essa função
     public MovimentacaoEstoque obterMovimentacaoEstoquePorId(Long id) {
+
         MovimentacaoEstoque movimentacaoEstoque = repository.findById(id).orElseThrow(() -> new MovimentacaoEstoqueNaoEncontradaException(id));
         return movimentacaoEstoque;
     }
@@ -114,6 +126,7 @@ public class MovimentacaoEstoqueService {
         produtoRepository.save(produto);
         repository.delete(movimentacaoBuscada);
     }
+
 
 
 }

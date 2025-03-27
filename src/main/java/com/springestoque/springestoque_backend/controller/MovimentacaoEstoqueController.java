@@ -29,6 +29,18 @@ public class MovimentacaoEstoqueController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/entrada")
+    public ResponseEntity<List<MovimentacaoEstoqueBodyDTO>> obterTodasMovimentacoesDeEntrada() {
+        return ResponseEntity.ok().body(servico.obterTodasMovimentacoesDeEntrada());
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/saida")
+    public ResponseEntity<List<MovimentacaoEstoqueBodyDTO>> obterTodasMovimentacoesDeSaida() {
+        return ResponseEntity.ok().body(servico.obterTodasMovimentacoesDeSaida());
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity realizarMovimentacao(@RequestBody MovimentacaoEstoqueDTO movimentacao){
         return ResponseEntity.status(HttpStatus.OK).body(servico.realizarMovimentacao( movimentacao));
