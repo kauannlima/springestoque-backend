@@ -30,6 +30,7 @@ public class FornecedorService {
         return repository.findAll().stream().map(FornecedorBodyDTO::new).toList();
     }
 
+    //Metodo sera usado para facitar a busca no front atraves do nome
     public List<FornecedorBodyDTO> obterFornecedoresPorNome(String nome) {
         List<Fornecedor> fornecedores = repository.findAllByNomeContainingIgnoreCase(nome);
 

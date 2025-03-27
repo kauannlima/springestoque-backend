@@ -35,6 +35,7 @@ public class ProdutoService {
         return repository.findAll().stream().map(ProdutoBodyDTO::new).toList();
     }
 
+    //Metodo sera usado para facitar a busca no front atraves do nome
     public List<ProdutoBodyDTO> obterProdutosPorNome(String nome) {
         Optional<Produto> produtos = repository.findAllByNomeContainingIgnoreCase(nome);
 

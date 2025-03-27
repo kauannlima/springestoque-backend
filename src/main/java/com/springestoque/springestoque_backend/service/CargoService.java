@@ -28,6 +28,7 @@ public class CargoService {
         return repository.findAll().stream().map(CargoBodyDTO::new).toList();
     }
 
+    //Metodo sera usado para facitar a busca no front atraves do nome
     public List<CargoBodyDTO> obterCargosPorNome(String nome) {
         List<Cargo> cargos = repository.findAllByNomeContainingIgnoreCase(nome);
 

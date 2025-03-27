@@ -30,6 +30,7 @@ public class FuncionarioService {
         return repository.findAll().stream().map(FuncionarioBodyDTO::new).toList();
     }
 
+    //Metodo sera usado para facitar a busca no front atraves do nome
     public List<FuncionarioBodyDTO> obterFuncionariosPorNome(String nome) {
         List<Funcionario> funcionarios = repository.findAllByNomeContainingIgnoreCase(nome);
 

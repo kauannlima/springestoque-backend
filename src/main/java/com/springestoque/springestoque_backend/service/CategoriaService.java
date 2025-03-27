@@ -26,6 +26,7 @@ public class CategoriaService {
         return repository.findAll().stream().map(CategoriaBodyDTO::new).toList();
     }
 
+    //Metodo sera usado para facitar a busca no front atraves do nome
     public List<CategoriaBodyDTO> obterCategoriasPorNome(String nome) {
         List<Categoria> categorias = repository.findAllByNomeContainingIgnoreCase(nome);
 

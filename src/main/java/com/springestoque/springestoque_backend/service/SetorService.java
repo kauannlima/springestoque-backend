@@ -1,6 +1,7 @@
 package com.springestoque.springestoque_backend.service;
 
 import com.springestoque.springestoque_backend.domain.Cargo;
+import com.springestoque.springestoque_backend.domain.Funcionario;
 import com.springestoque.springestoque_backend.domain.Produto;
 import com.springestoque.springestoque_backend.domain.Setor;
 import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
@@ -12,6 +13,7 @@ import com.springestoque.springestoque_backend.exception.ProdutoNaoEncontradoExc
 import com.springestoque.springestoque_backend.exception.SetorNaoEncontradoException;
 import com.springestoque.springestoque_backend.repository.SetorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +29,7 @@ public class SetorService {
         return repository.findAll().stream().map(SetorBodyDTO::new).toList();
     }
 
+    //Metodo sera usado para facitar a busca no front atraves do nome
     public List<SetorBodyDTO> obterSetoresPorNome(String nome) {
         List<Setor> setores = repository.findAllByNomeContainingIgnoreCase(nome);
 
@@ -61,11 +64,11 @@ public class SetorService {
     public void excluirSetor(Long id) {
         Setor setor = obterSetorPorId(id);
 
-//        if (/* set a condition for checking dependency */) {
-//            throw new EntidadeVinculadaException("Setor", id);
-//        }
-
-       repository.delete(setor);
+        try {
+            repository.delete(setor);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeVinculadaException("Não é possível excluir o setor, pois ele está vinculado a uma movimentação.");
+        }
     }
 
 
