@@ -1,5 +1,6 @@
 package com.springestoque.springestoque_backend.domain;
 
+import com.springestoque.springestoque_backend.exception.StatusManutencaoInvalidoException;
 import com.springestoque.springestoque_backend.exception.TipoMovimentacaoNotFoundException;
 
 public enum TipoMovimentacaoEnum {
@@ -24,7 +25,7 @@ public enum TipoMovimentacaoEnum {
                 }
             }
         }
-        throw new TipoMovimentacaoNotFoundException(text);
+        throw new StatusManutencaoInvalidoException(text);
     }
 
 }

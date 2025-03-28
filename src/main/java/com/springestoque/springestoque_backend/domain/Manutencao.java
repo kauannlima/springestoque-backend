@@ -15,10 +15,14 @@ public class Manutencao {
     @JoinColumn(name = "produto_id", nullable = false)
     private Produto produto;
 
+    @Column(name = "quantidade_manutencao", nullable = false)
+    private Integer quantidadeManutencao;
+
     @Column(name = "data_inicio", nullable = false)
     private LocalDate dataInicio;
 
-    @Column(name = "data_fim", nullable = false)
+    //A data fim será informada ao concluir a manutenção
+    @Column(name = "data_fim")
     private LocalDate dataFim;
 
     @Column(columnDefinition = "TEXT")
@@ -26,24 +30,19 @@ public class Manutencao {
 
     @Enumerated(EnumType.STRING) // Salva o nome da constante
     @Column(name = "status_da_manutencao  ", nullable = false)
-    private StatusManutencaoEnum tipo;
+    private StatusManutencaoEnum status;
 
-    @ManyToOne
-    @JoinColumn(name = "funcionario_id", nullable = false)
-    private Funcionario funcionario;
+    public Manutencao() {
+    }
 
-
-    public Manutencao(Long id, Produto produto, LocalDate dataInicio, LocalDate dataFim, String descricao, StatusManutencaoEnum tipo, Funcionario funcionario) {
+    public Manutencao(Long id, Produto produto, Integer quantidadeManutencao, LocalDate dataInicio, LocalDate dataFim, String descricao, StatusManutencaoEnum status) {
         this.id = id;
         this.produto = produto;
+        this.quantidadeManutencao = quantidadeManutencao;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.descricao = descricao;
-        this.tipo = tipo;
-        this.funcionario = funcionario;
-    }
-
-    public Manutencao() {
+        this.status = status;
     }
 
     public Long getId() {
@@ -60,6 +59,14 @@ public class Manutencao {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+    }
+
+    public Integer getQuantidadeManutencao() {
+        return quantidadeManutencao;
+    }
+
+    public void setQuantidadeManutencao(Integer quantidadeManutencao) {
+        this.quantidadeManutencao = quantidadeManutencao;
     }
 
     public LocalDate getDataInicio() {
@@ -86,19 +93,11 @@ public class Manutencao {
         this.descricao = descricao;
     }
 
-    public StatusManutencaoEnum getTipo() {
-        return tipo;
+    public StatusManutencaoEnum getStatus() {
+        return status;
     }
 
-    public void setTipo(StatusManutencaoEnum tipo) {
-        this.tipo = tipo;
-    }
-
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
+    public void setStatus(StatusManutencaoEnum tipo) {
+        this.status = tipo;
     }
 }
