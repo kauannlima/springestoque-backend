@@ -1,9 +1,6 @@
 package com.springestoque.springestoque_backend.service;
 
-import com.springestoque.springestoque_backend.domain.Cargo;
-import com.springestoque.springestoque_backend.domain.Funcionario;
-import com.springestoque.springestoque_backend.domain.Produto;
-import com.springestoque.springestoque_backend.domain.Setor;
+import com.springestoque.springestoque_backend.domain.*;
 import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.ProdutoBodyDTO;
 import com.springestoque.springestoque_backend.domain.dto.SetorBodyDTO;
@@ -59,6 +56,15 @@ public class SetorService {
         }
 
         repository.save(setorBuscado);
+    }
+
+    public void excluirSetor(Long id) {
+        Setor setor = obterSetorPorId(id);
+        try {
+            repository.delete(setor);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeVinculadaException("Não é possível excluir o setor, pois ele está vinculado a uma ou mais movimentações.");
+        }
     }
 
 
