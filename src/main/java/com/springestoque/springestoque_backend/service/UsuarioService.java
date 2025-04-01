@@ -4,15 +4,15 @@ import com.springestoque.springestoque_backend.domain.Cargo;
 import com.springestoque.springestoque_backend.domain.Funcionario;
 import com.springestoque.springestoque_backend.domain.Setor;
 import com.springestoque.springestoque_backend.domain.Usuario;
-import com.springestoque.springestoque_backend.domain.dto.CargoBodyDTO;
-import com.springestoque.springestoque_backend.domain.dto.SetorBodyDTO;
-import com.springestoque.springestoque_backend.domain.dto.UsuarioBodyDTO;
-import com.springestoque.springestoque_backend.domain.dto.UsuarioDTO;
+import com.springestoque.springestoque_backend.domain.dto.*;
 import com.springestoque.springestoque_backend.exception.*;
 import com.springestoque.springestoque_backend.repository.FuncionarioRepository;
 import com.springestoque.springestoque_backend.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,17 +37,26 @@ public class UsuarioService {
         return repository.findAll().stream().map(UsuarioBodyDTO::new).toList();
     }
 
-    public List<UsuarioBodyDTO> obterUsuariosPorNome(String nome) {
-        List<Usuario> usuarios = repository.findAllByNomeDeUsuarioContainingIgnoreCase(nome);
+// CADASTRAR NO FUTURO UM GET QUE BUSCA USUARIOS PELO NOME DE FUNCIONARIO
+//    public List<UsuarioBodyDTO> obterUsuariosPorNome(String nome) {
+//        List<Usuario> usuarios = repository.findAllByNomeDeUsuarioContainingIgnoreCase(nome);
+//
+//        if (usuarios.isEmpty()) {
+//            throw new UsuarioNaoEncontradoException(nome);  // Exceção customizada
+//        }
+//
+//        return usuarios.stream()
+//                .map(UsuarioBodyDTO::new)  // Convertendo de Cargo para CargoBodyDTO
+//                .collect(Collectors.toList());  // Coletando em uma lista
+//    }
 
-        if (usuarios.isEmpty()) {
-            throw new UsuarioNaoEncontradoException(nome);  // Exceção customizada
-        }
+        public UsuarioLoginDTO obterUsuariosPorNomeDeUsuario(String nomeDeUsuario) {
+        Usuario usuario = repository.findByNomeDeUsuario(nomeDeUsuario);
 
-        return usuarios.stream()
-                .map(UsuarioBodyDTO::new)  // Convertendo de Cargo para CargoBodyDTO
-                .collect(Collectors.toList());  // Coletando em uma lista
+       return new UsuarioLoginDTO(usuario.getNomeDeUsuario(),usuario.getSenha());
     }
+
+
 
     public Usuario obterUsuarioPorId(Long id) {
         Usuario usuario = repository.findById(id).orElseThrow(() -> new UsuarioNaoEncontradoException(id));
@@ -66,6 +75,20 @@ public class UsuarioService {
 
         return new UsuarioBodyDTO(usuario.getId(), usuario.getNomeDeUsuario(), usuario.getEmail());
     }
+
+    public void realizarLogin(UsuarioLoginDTO dto){
+        UsuarioLoginDTO Usuariodto = obterUsuariosPorNomeDeUsuario(dto.nomeDoUsuario());
+
+    }
+
+    var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
+    var auth = this.authenticationManager.authenticate(usernamePassword);
+    var token = tokenService.generateToken((User) auth.getPrincipal());
+    String role = ((User) auth.getPrincipal()).getAuthorities().stream()
+            .map(GrantedAuthority::getAuthority)
+            .findFirst()
+            .orElse("USER");
+        return  ResponseEntity.ok(new LoginResponseDTO(token, role));
 
 
     public void editarUsuario(Long id, Usuario usuario) {

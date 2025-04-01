@@ -6,7 +6,6 @@ import com.springestoque.springestoque_backend.domain.Usuario;
 public record UsuarioBodyDTO(
         Long id,
         String funcionario,
-        @JsonProperty("nome_de_usuario")
         String nomeDoUsuario
 ) {
 

@@ -27,11 +27,11 @@ public class UsuarioController {
         return ResponseEntity.ok().body(servico.obterTodosOsUsuarios());
     }
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @GetMapping("/{nome}")
-    public ResponseEntity<List<UsuarioBodyDTO>> obterUsuariosPorNome(@PathVariable String nome) {
-        return ResponseEntity.ok().body(servico.obterUsuariosPorNome(nome));
-    }
+//    @CrossOrigin(origins = "*", allowedHeaders = "*")
+//    @GetMapping("/{nome}")
+//    public ResponseEntity<List<UsuarioBodyDTO>> obterUsuariosPorNome(@PathVariable String nome) {
+//        return ResponseEntity.ok().body(servico.obterUsuariosPorNome(nome));
+//    }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
