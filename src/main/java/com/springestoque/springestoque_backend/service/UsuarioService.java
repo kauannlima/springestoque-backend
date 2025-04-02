@@ -57,10 +57,6 @@ public class UsuarioService {
         public UsuarioLoginDTO obterUsuariosPorNomeDeUsuario(String nomeDeUsuario) {
         Usuario usuario = repository.findByNomeDeUsuario(nomeDeUsuario);
 
-            if (usuario == null) {
-                throw new UsuarioNaoEncontradoException(nomeDeUsuario);
-            }
-
        return new UsuarioLoginDTO(usuario.getNomeDeUsuario(),usuario.getSenha());
     }
 
@@ -86,6 +82,10 @@ public class UsuarioService {
 
     public String realizarLogin(UsuarioLoginDTO dto) {
         Usuario usuario = repository.findByNomeDeUsuario(dto.nomeDoUsuario());
+
+        if (usuario == null) {
+            throw new UsuarioNaoEncontradoException(dto.nomeDoUsuario());
+        }
 
         if (!passwordEncoder.matches(dto.senha(), usuario.getSenha())) {
             throw new SenhaIncorretaException();
