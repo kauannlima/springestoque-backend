@@ -8,6 +8,7 @@ import com.springestoque.springestoque_backend.domain.dto.*;
 import com.springestoque.springestoque_backend.exception.*;
 import com.springestoque.springestoque_backend.repository.FuncionarioRepository;
 import com.springestoque.springestoque_backend.repository.UsuarioRepository;
+import com.springestoque.springestoque_backend.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,9 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository repository;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Autowired
     private FuncionarioRepository funcionarioRepository;
@@ -76,19 +80,15 @@ public class UsuarioService {
         return new UsuarioBodyDTO(usuario.getId(), usuario.getNomeDeUsuario(), usuario.getEmail());
     }
 
-    public void realizarLogin(UsuarioLoginDTO dto){
-        UsuarioLoginDTO Usuariodto = obterUsuariosPorNomeDeUsuario(dto.nomeDoUsuario());
+    public String realizarLogin(UsuarioLoginDTO dto) {
+        Usuario usuario = repository.findByNomeDeUsuario(dto.nomeDoUsuario());
 
+        if (usuario == null || !passwordEncoder.matches(dto.senha(), usuario.getSenha())) {
+            throw new RuntimeException("Usuário ou senha inválidos");
+        }
+
+        return jwtUtil.gerarToken(usuario.getNomeDeUsuario());
     }
-
-    var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
-    var auth = this.authenticationManager.authenticate(usernamePassword);
-    var token = tokenService.generateToken((User) auth.getPrincipal());
-    String role = ((User) auth.getPrincipal()).getAuthorities().stream()
-            .map(GrantedAuthority::getAuthority)
-            .findFirst()
-            .orElse("USER");
-        return  ResponseEntity.ok(new LoginResponseDTO(token, role));
 
 
     public void editarUsuario(Long id, Usuario usuario) {

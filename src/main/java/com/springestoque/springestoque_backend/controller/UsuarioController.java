@@ -1,10 +1,7 @@
 package com.springestoque.springestoque_backend.controller;
 
 import com.springestoque.springestoque_backend.domain.Usuario;
-import com.springestoque.springestoque_backend.domain.dto.FuncionarioDTO;
-import com.springestoque.springestoque_backend.domain.dto.SetorBodyDTO;
-import com.springestoque.springestoque_backend.domain.dto.UsuarioBodyDTO;
-import com.springestoque.springestoque_backend.domain.dto.UsuarioDTO;
+import com.springestoque.springestoque_backend.domain.dto.*;
 import com.springestoque.springestoque_backend.service.FuncionarioService;
 import com.springestoque.springestoque_backend.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +31,17 @@ public class UsuarioController {
 //    }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity cadastrarUsuario(@RequestBody UsuarioDTO dto){
         UsuarioBodyDTO usuarioBodyDTO =  servico.cadastrarUsuario(dto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioBodyDTO);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> realizarLogin(@RequestBody UsuarioLoginDTO dto) {
+        String token = servico.realizarLogin(dto);
+        return ResponseEntity.ok(token);
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
