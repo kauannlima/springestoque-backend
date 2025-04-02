@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -12,22 +13,27 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "sua_chave_secreta_suficientemente_longa_para_256bits";
-    private static final Algorithm ALGORITHM = Algorithm.HMAC256(SECRET_KEY);
+    @Value("${jwt.secret.key}")
+    private String SECRET_KEY;
+
+    // Inicialização do Algorithm dentro de um metodo de instância
+    private Algorithm getAlgorithm() {
+        return Algorithm.HMAC256(SECRET_KEY);
+    }
 
     // Gera um token JWT
     public String gerarToken(String username) {
         return JWT.create()
                 .withSubject(username)
                 .withIssuedAt(new Date())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 86400000)) // 1 dia de expiração
-                .sign(ALGORITHM);
+                .withExpiresAt(new Date(System.currentTimeMillis() + 3600)) // 1 hora de expiração
+                .sign(getAlgorithm());
     }
 
     // Valida o token e retorna true se estiver válido
     public boolean validarToken(String token, String username) {
         try {
-            JWTVerifier verifier = JWT.require(ALGORITHM)
+            JWTVerifier verifier = JWT.require(getAlgorithm())
                     .withSubject(username)
                     .build();
             verifier.verify(token);
