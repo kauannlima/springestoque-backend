@@ -48,11 +48,6 @@ public class GlobalExceptionHandler {
         return buildErrorResponse("Setor não encontrado", ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(UsuarioNaoEncontradoException.class)
-    public ResponseEntity<ErroResponse> handleUsuarioNaoEncontradoException(UsuarioNaoEncontradoException ex) {
-        return buildErrorResponse("Usuário não encontrado", ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
     @ExceptionHandler(EntidadeVinculadaException.class)
     public ResponseEntity<ErroResponse> handleEntidadeVinculadaException(EntidadeVinculadaException ex) {
         return buildErrorResponse("Entidade Vinculada", ex.getMessage(), HttpStatus.BAD_REQUEST);
@@ -83,6 +78,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(UsuarioNaoEncontradoException.class)
+    public ResponseEntity<String> handleUsuarioNaoEncontrado(UsuarioNaoEncontradoException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(SenhaIncorretaException.class)
+    public ResponseEntity<String> handleSenhaIncorreta(SenhaIncorretaException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErroResponse> handleGenericException(Exception ex) {
