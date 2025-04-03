@@ -27,8 +27,6 @@ A estrutura do banco de dados pode ser visualizada no diagrama abaixo:
 
 ![Diagrama do Banco de Dados](docs/diagrama.png)
 
-> ⚠️ **Observação**: Para visualizar o diagrama, certifique-se de acessar o link diretamente.  
-
 ## 🚀 Como rodar o projeto  
 
 1. **Clonar o repositório**  
